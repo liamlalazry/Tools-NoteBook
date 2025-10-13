@@ -1,0 +1,19 @@
+
+**CMD**
+powershell history for cmd 
+type%userprofile%\AppData\Roaming\Microsoft\Windows\Powershell\PSReadline\ConsoleHost_history.txt
+-> history of **powershell** commands
+
+cmdkey /list ->creds that saved by the user by the creds manager of windows
+
+whoami /priv -> priv of your user 
+
+
+**sc**
+sc qc <ServiceName> - service control query config - info on a service in the system 
+sc config change the config of a service can change the path to a malicious file that will run instead of the service in system administrator
+example:
+sc config [serviceName] binPath="example\example" obj=[system account like LocalSystem]
+
+**net user**
+The net user command in Windows is used to view, create, modify, or delete user accounts on a computer.
