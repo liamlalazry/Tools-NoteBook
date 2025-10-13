@@ -1,0 +1,50 @@
+Cyber web pen-testing tools searching data about a client 
+
+Hunter.io
+Phonebook.cz
+Voilanorbert.com
+Clearbit.com  => connect => only available in chrome !
+For email validate if exist = https://verifalia.com/validate-email
+Role 1: do not underestimate forget password a forgot password page can give a key letter even after the dots for example li******@g**** can be cruisial to comparing the data with data we already have !
+Rule 2: Using leaks databases to get more data after getting the email or other data 
+Example database dehashed.com
+Crt.sh => a website to web certificate that out there in the internet but founds also emails and subDomains
+--
+OWASP AMASS – VERY POPULAR TOOL FOR BUG BOUNTY 
+CHALLENGE INSTALL OWASP AND SEE HOW MUCH SUBDOMAINS U CAN FIND FOR TESLA
+--
+Builtwith.com is a website that’s tells u what other websites are built of language and systems etc.
+Problem – tons of information for big websites…
+Woppalyzer – active in the page a pop up that says what are the page contains each page itself 
+All kind of info about a page and not the full site!
+Much more confort then builtwith!
+--
+Whatweb = kalilinux tool
+
+Give it a target for example a url address and it will give u details on the web it less beauty structed data and maybe less data it self but there is a new data that can be reached throw this tool for example a version of the language and other versions 
+MORE TOOLS MORE ADVANTAGE!!!
+--
+Burpsuite – burpsuite is a tool that is installed automatically inside of kali linux the tool is basically monitoring the target traffic and sees all the req res that the web did we can dig a lot of information from those traffic monitoring about how the web acting etc
+--
+Google fu -google search syntax = google can act to operations like * () AND or OR;
+--
+Social media = linkedin,twitter pictures can provide a badge or a information that one of the employess did a mistake and leaks linked in can give names and info and all that info can be compared with the data we already found 
+People always lazy with password sometimes we can take advantage of that !
+vulnHub- have vulnerable machines easy to hard to download in virtual box and play with… in addition we now going to install kioptrix lvl1 vul researcher
+ --
+Nikto = scanner for vulnerability in the network ! gets a url in the terminal checks the network with that url
+Dirbuster = directory buster, 
+(Gobuster,dirbuster alternatives and makes the same idea )
+dirbuster has a wordlist of wellknown directories in the url and it checks them with the website it can help as get into pages that we wouldn’t got into alone for example it will search for as the word admin and it will check for the files we tell him to check for for example pdf zip docx etc…
+Then we can browse into those directories and dig some knowkege and search for vulnerability 
+Smb- a file share the client using very vulnerable commonly used In workings spaces.
+
+Metasploit = platform to check the vull – of anything like smb and more it kind of a database of vulenrabilitys tht can be used and exploit if triggered 
+-trying to connect to the file share as said earlier smb is a file share system with smbclient we will try to connect to the share -l say list the file and then give the ip u of the machine with the smb u trying to connect to  if we lucky maybe the smb not protected with password and we would be able to get in to see the info
+Ssh-trying to connect to the network with ssh connection using the terminal ssh +ipv4 + params
+In the ssh search we looking for a banner with info about the ssh connection and staff
+Googling exploits for the vulnerables we find already for example googling exploit for smb unix sanba2.2.1 then finding scripts in exploit database and github etc  then using the scripts againt the vulnerable 
+Searchsploit-as the name says it search for sploits it takes u as a string so don’t be too specified it the equivqlent to the google search for exploit 
+Nessus – scanner for vulnerabilities 
+Terminal command - /bin/systemctl start nessusd
+
