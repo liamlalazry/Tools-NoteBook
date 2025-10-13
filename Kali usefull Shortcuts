@@ -1,0 +1,45 @@
+🖥 קיצורי מקלדת בסיסיים בטרמינל (Bash)
+קיצור	פעולה	תיאור
+Ctrl + A	Move to start of line	קופץ להתחלת הפקודה
+Ctrl + E	Move to end of line	קופץ לסוף הפקודה
+Ctrl + U	Cut from start to cursor	מוחק מההתחלה עד הסמן
+Ctrl + K	Cut from cursor to end	מוחק מהסמן עד הסוף
+Ctrl + W	Cut previous word	מוחק את המילה הקודמת
+Ctrl + Y	Paste last cut (yank)	מדביק מה שנחתך
+Ctrl + L	Clear screen	כמו clear, מנקה את המסך
+Ctrl + C	Cancel command	מבטל פקודה שרצה
+Ctrl + D	Logout / EOF	סוגר את הטרמינל אם אין פקודה
+Ctrl + R	Reverse search	חיפוש אחורה בהיסטוריה של פקודות
+
+🔁 קיצורי היסטוריית פקודות
+קיצור	תוצאה
+!!	מריץ את הפקודה האחרונה
+!n	מריץ את הפקודה מספר n בהיסטוריה
+!string	מריץ את הפקודה האחרונה שהתחילה ב־string
+^old^new	מחליף מחרוזת בפעולה הקודמת (sed מהיר)
+
+🧮 קיצורים ב־tmux (מנהל חלונות מסוף)
+קיצור	פעולה	הערות
+Ctrl + B, "	פיצול אופקי של המסך	
+Ctrl + B, %	פיצול אנכי של המסך	
+Ctrl + B, O	מעבר בין חלונות	
+Ctrl + B, D	Detach מה־tmux session	
+tmux attach	חיבור חזרה	
+
+🛠 מאוד שימושי בהרצת מספר כלים במקביל (nmap, metasploit, tcpdump וכו')
+
+🐚 שימושים מתקדמים ב־Kali (שילובים חשובים)
+קיצור	שימוש מומלץ
+Tab	השלמה אוטומטית של פקודות/קבצים
+Ctrl + Shift + T	פתיחת טאב חדש ב־GNOME Terminal
+Ctrl + Shift + C / V	העתק/הדבק בתוך טרמינל GUI
+Ctrl + Z	השהיית תהליך (לרקע)
+fg / bg	החזרת תהליך קדימה / לרקע
+
+📦 בקיצורים גרפיים (Kali Desktop)
+קיצור	פעולה
+Alt + Tab	מעבר בין תוכנות
+Ctrl + Alt + T	פתיחת טרמינל חדש
+Print Screen	צילום מסך
+Alt + F2	הפעלת פקודה מהירה
+Ctrl + Alt + L	נעילת המסך
