@@ -1,0 +1,73 @@
+**Enum**
+hostname -> info on target system role
+uname -a -> sys info on the kernal
+/proc/version -> info target system processes kernel version etc
+env -> enviroment variables
+sudo -l -> command a user can sudo
+id -> info about privilege level and group membership of a user 
+/etc/passwd -> easy way to discover users on the system
+cat /etc/passwd | cut -d ":" -f 1 -> username only
+cat /etc.passwd | grep home -> real users only (not the system once)
+/etc.issue -> info about os 
+**Processes info**
+ps ->running processes
+ps -A -> all processes
+ps axjf -> processes tree
+ps aux -> processes for all users
+**Netstat**
+netstat -a -> all listening ports and established connections
+netstat -at / -au -> onlt tcp or udp connections
+netstat -l only listening ports
+netstat -s -> statistics by protocol
+netstat -ano -> {-a} display all sockets -n {dont resolve names} {-o}  display timers
+netstat -tulnp
+{
+ -t -> tcp
+ -u -> udp
+ -l -> listening
+ -n -> numeric
+ -> pid 
+ possible to grep with the port u looking for 
+}
+**Find toolkit**
+Find files:
+find . -name flag1.txt: find the file named “flag1.txt” in the current directory
+find /home -name flag1.txt: find the file names “flag1.txt” in the /home directory
+find / -type d -name config: find the directory named config under “/”
+find / -type f -perm 0777: find files with the 777 permissions (files readable, writable, and executable by all users)
+find / -perm a=x: find executable files
+find / -perm -4000 -or -perm -2000 2>/dev/null -> find suid & sgid
+find /home -user frank: find all files for user “frank” under “/home”
+find / -mtime 10: find files that were modified in the last 10 days
+find / -atime 10: find files that were accessed in the last 10 day
+find / -cmin -60: find files changed within the last hour (60 minutes)
+find / -amin -60: find files accesses within the last hour (60 minutes)
+find / -size 50M: find files with a 50 MB size
+find / -writable 2>/dev/null | cut -d "/" -f 2,3 | grep -v proc | sort -u
+
+**/bin**
+getcap -r / 2>/dev/null -> /bin with capabilities
+
+**services enum**
+systemctl list-units --type=service --state=running -> finds running services 
+
+**nc**
+nc -lvnp [port]
+{
+-l -> Listen mode — Netcat will wait for incoming connections rather than initiate one.
+-v -> Verbose mode — shows detailed info (e.g., connection attempts, IPs).
+-n -> No DNS resolution — IPs will be used as-is without trying to resolve hostnames.
+-p -> Port number to listen on — you specify which port Netcat should bind to.
+}
+**ss**
+ss -lntp ->  Show connections with process info:
+
+**Symbolic Link**
+ln -s [target] [name of link]
+example: ln -s /etc/passwd ~/passwd_link
+
+**mkpasswd**
+mkpasswd -m sha-512 newpasswordhere - Generate a new password hash with a password of your choice: for new and secure systems 
+
+**openssl**
+openssl passwd newpasswordhere -specific to making hashes to /etc/passwd  and for using on old systems
